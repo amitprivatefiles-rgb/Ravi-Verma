@@ -1,0 +1,128 @@
+---
+import { contact, enquiryTypes, leadEndpoint } from "../data/site";
+interface Props {
+  preset?: string;
+}
+const { preset } = Astro.props;
+---
+
+<form class="form" data-partner-form data-endpoint={leadEndpoint} data-fallback-email={contact.email} novalidate>
+  <input type="hidden" name="kind" value="partner" />
+  <input type="hidden" name="source" value="R. P. Verma website" />
+  <div class="hp" aria-hidden="true">
+    <label>Company website <input type="text" name="company_website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="form__grid">
+    <div class="field field--wide">
+      <label for="f-enquiryType">I'd like to <span aria-hidden="true">*</span></label>
+      <select id="f-enquiryType" name="enquiryType" required>
+        <option value="" disabled selected={!preset}>Choose an enquiry type</option>
+        {enquiryTypes.map((t) => <option selected={t === preset}>{t}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-name">Full name <span aria-hidden="true">*</span></label>
+      <input id="f-name" name="name" required autocomplete="name" maxlength="120" />
+    </div>
+    <div class="field">
+      <label for="f-phone">Phone <span aria-hidden="true">*</span></label>
+      <input id="f-phone" name="phone" type="tel" required autocomplete="tel" placeholder="+91" />
+    </div>
+    <div class="field">
+      <label for="f-email">Email <span aria-hidden="true">*</span></label>
+      <input id="f-email" name="email" type="email" required autocomplete="email" />
+    </div>
+    <div class="field">
+      <label for="f-organisation">Organisation</label>
+      <input id="f-organisation" name="organisation" maxlength="120" autocomplete="organization" />
+    </div>
+    <div class="field field--wide">
+      <label for="f-city">City</label>
+      <input id="f-city" name="city" maxlength="80" autocomplete="address-level2" />
+    </div>
+    <div class="field field--wide">
+      <label for="f-message">Tell us more <span aria-hidden="true">*</span></label>
+      <textarea id="f-message" name="message" rows="4" required maxlength="2000" placeholder="Your project, land, idea or request"></textarea>
+    </div>
+  </div>
+  <p class="form__status" role="status" aria-live="polite" data-status></p>
+  <button class="btn btn--gold btn--block" type="submit">Send enquiry</button>
+  <p class="form__note">Every enquiry reaches Mr. Verma's office. We reply within two working days.</p>
+</form>
+
+<script>
+  const PHONE = /^[+()\-\s\d]{7,20}$/;
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  document.querySelectorAll<HTMLFormElement>("[data-partner-form]").forEach((form) => {
+    const status = form.querySelector<HTMLElement>("[data-status]")!;
+    const button = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+
+    const setError = (name: string, msg: string) => {
+      const field = form.querySelector(`[name="${name}"]`)?.closest(".field");
+      if (!field) return;
+      field.classList.add("field--error");
+      const p = document.createElement("p");
+      p.className = "field__error";
+      p.textContent = msg;
+      field.appendChild(p);
+    };
+
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      form.querySelectorAll(".field__error").forEach((e) => e.remove());
+      form.querySelectorAll(".field--error").forEach((e) => e.classList.remove("field--error"));
+      status.textContent = "";
+      status.className = "form__status";
+
+      const data = new FormData(form);
+      const v = (k: string) => String(data.get(k) ?? "").trim();
+      const errors: Record<string, string> = {};
+      if (!v("enquiryType")) errors.enquiryType = "Please choose an enquiry type.";
+      if (!v("name")) errors.name = "Please enter your name.";
+      if (!PHONE.test(v("phone"))) errors.phone = "Please enter a valid phone number.";
+      if (!EMAIL.test(v("email"))) errors.email = "Please enter a valid email.";
+      if (!v("message")) errors.message = "Please add a short message.";
+      if (Object.keys(errors).length) {
+        Object.entries(errors).forEach(([k, m]) => setError(k, m));
+        status.textContent = "Please check the highlighted fields.";
+        status.classList.add("form__status--error");
+        return;
+      }
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        // No lead endpoint configured: hand the enquiry to the visitor's email app.
+        const body = ["enquiryType", "name", "phone", "email", "organisation", "city", "message"]
+          .map((k) => `${k}: ${v(k)}`)
+          .join("\n");
+        location.href = `mailto:${form.dataset.fallbackEmail}?subject=${encodeURIComponent(`${v("enquiryType")}: ${v("name")}`)}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Sending…";
+      try {
+        const res = await fetch(endpoint, { method: "POST", body: data });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.ok) {
+          form.reset();
+          status.textContent = "Thank you. Your enquiry has reached Mr. Verma's office; we will be in touch shortly.";
+          status.classList.add("form__status--ok");
+        } else {
+          Object.entries((json.errors ?? {}) as Record<string, string>).forEach(([k, m]) => setError(k, m));
+          throw new Error(json.message);
+        }
+      } catch (err) {
+        status.textContent =
+          (err instanceof Error && err.message) ||
+          `Something went wrong. Please call ${"+91 70444 70888"} or email ${form.dataset.fallbackEmail}.`;
+        status.classList.add("form__status--error");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Send enquiry";
+      }
+    });
+  });
+</script>

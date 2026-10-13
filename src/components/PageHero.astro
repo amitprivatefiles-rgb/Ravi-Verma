@@ -1,0 +1,23 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  image?: string;
+}
+const { eyebrow, title, intro, image } = Astro.props;
+---
+
+<section class="page-hero">
+  {image && <img class="page-hero__bg" src={image} alt="" loading="eager" />}
+  <div class="jali-overlay" aria-hidden="true"></div>
+  <div class="container page-hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">{eyebrow}</span>
+    </nav>
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    {intro && <p class="lead">{intro}</p>}
+    <slot />
+  </div>
+</section>

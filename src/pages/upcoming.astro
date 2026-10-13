@@ -1,0 +1,77 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { upcoming } from "../data/site";
+const f = upcoming.featured;
+---
+
+<Base
+  title="Upcoming projects"
+  description="Upcoming projects by R. P. Verma and NRS Group: a tower hotel on 20 bighas at Tarapith, Birbhum, and the NRS Royal Classic eco-resort in the Sundarban."
+>
+  <PageHero
+    eyebrow="Upcoming projects"
+    title="What he is building next"
+    intro="New hotels in places travellers already go, built by the group's own construction arm."
+    image="/images/banner-palace-night.jpg"
+  />
+
+  <section class="section">
+    <div class="container spotlight spotlight--big" data-reveal>
+      <div class="spotlight__art" aria-hidden="true">
+        <svg viewBox="0 0 200 220" class="tower-art">
+          <path d="M20 205h160" />
+          <rect x="70" y="30" width="60" height="175" />
+          {Array.from({ length: 13 }).map((_, i) => <path d={`M70 ${45 + i * 12}h60`} stroke-dasharray={i < 3 ? "3 4" : undefined} opacity={i < 3 ? 0.6 : 0.4} />)}
+          <path d="M150 205V20M60 24h120M150 20l20 4M150 20l-20 4" />
+        </svg>
+        <span class="badge">{f.status}</span>
+      </div>
+      <div>
+        <p class="eyebrow">Featured · {f.status}</p>
+        <h2>{f.name}</h2>
+        <p class="spotlight__place">{f.place}</p>
+        <p class="lead">{f.body}</p>
+        <dl class="facts">
+          {f.facts.map((x) => (
+            <div>
+              <dt>{x.label}</dt>
+              <dd>{x.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <a href="/partner/?type=Invest%20in%20a%20project" class="btn btn--gold">Interested in investing?</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ivory">
+    <div class="container">
+      <SectionHead eyebrow="Construction glimpse" title="Progress updates" intro="Monthly site photographs from Tarapith will be published here as construction moves forward." />
+      {/* TODO(client): monthly Tarapith construction photos and renders. */}
+      <div class="placeholder" data-reveal>Site photographs coming soon</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="Pipeline" title="More destinations on the way" />
+      <div class="cards cards--3">
+        {
+          upcoming.others.map((p) => (
+            <article class:list={["card", { "card--soon": p.status === "Coming soon" }]} data-reveal>
+              <span class="badge badge--inline">{p.status}</span>
+              <h3>{p.name}</h3>
+              <p class="venture__meta">{p.place}</p>
+              <p>{p.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Interested in investing in an upcoming project?" body="Share your details and Mr. Verma's office will share the project information in person." />
+</Base>

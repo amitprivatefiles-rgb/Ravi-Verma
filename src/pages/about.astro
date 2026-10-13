@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import QuoteBand from "../components/QuoteBand.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Stats from "../components/Stats.astro";
+import { bio, companiesFounded, person, quotes, values } from "../data/site";
+---
+
+<Base
+  title="About"
+  description="The story of Ravinandan Prasad (R. P.) Verma: from an ordinary employee to the founder of NRS Group, a hospitality group across eastern India."
+>
+  <PageHero
+    eyebrow="About"
+    title="The man behind NRS Group"
+    intro={`${person.fullName} did not inherit an empire. He built one, company by company, from Kolkata.`}
+    image="/images/banner-staircase.jpg"
+  />
+
+  <section class="section">
+    <div class="container profile">
+      <aside class="profile__aside" data-reveal>
+        <div class="frame">
+          <img src={person.portraitWide} alt={`${person.honorific} at NRS Royal Palace`} width="900" height="1200" loading="lazy" />
+        </div>
+        <dl class="profile__facts">
+          <div><dt>Full name</dt><dd>{person.fullName}</dd></div>
+          <div><dt>Known as</dt><dd>R. P. Verma</dd></div>
+          <div><dt>Role</dt><dd>{person.title}, {person.org}</dd></div>
+          <div><dt>Based in</dt><dd>Kolkata, West Bengal</dd></div>
+          <div><dt>First venture</dt><dd>Bistro-Y Foods, 2013</dd></div>
+          <div><dt>Companies founded</dt><dd>{companiesFounded.length}</dd></div>
+        </dl>
+      </aside>
+      <article class="prose" data-reveal>
+        <p class="eyebrow">His story</p>
+        <h2>From an ordinary employee to the head of a group</h2>
+        {bio.map((p, i) => <p class={i === 0 ? "lead" : undefined}>{p}</p>)}
+        <blockquote class="pull">&ldquo;{quotes.service}&rdquo;</blockquote>
+        {/* TODO(client): hometown, education, first employer, family and CSR work (plan §5.2). */}
+      </article>
+    </div>
+  </section>
+
+  <QuoteBand quote={quotes.philosophy} />
+
+  <section class="section section--ivory">
+    <div class="container">
+      <SectionHead eyebrow="Values" title="What he builds on" center />
+      <div class="cards cards--3">
+        {
+          values.map((v, i) => (
+            <article class="card" data-reveal>
+              <span class="card__num">0{i + 1}</span>
+              <h3>{v.title}</h3>
+              <p>{v.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="Companies founded" title="The companies he has built" />
+      <div class="table-wrap" data-reveal>
+        <table class="table">
+          <thead><tr><th scope="col">Company</th><th scope="col">Sector</th><th scope="col">Year</th></tr></thead>
+          <tbody>
+            {companiesFounded.map((c) => (
+              <tr><td>{c.name}</td><td>{c.sector}</td><td>{c.year}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="center"><a href="/journey/" class="btn btn--ink">Follow the journey</a></p>
+    </div>
+  </section>
+
+  <Stats light />
+  <CtaBand />
+</Base>

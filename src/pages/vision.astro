@@ -1,0 +1,58 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import QuoteBand from "../components/QuoteBand.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { quotes, values, vision } from "../data/site";
+---
+
+<Base
+  title="Vision & mission"
+  description="The vision, mission and philosophy that R. P. Verma has built NRS Group on: quality services demand quality people."
+>
+  <PageHero
+    eyebrow="Vision & mission"
+    title="Excellence is not a milestone but a daily practice"
+    intro="The principles behind every company, hire and property in NRS Group."
+    image="/images/banner-staircase.jpg"
+  />
+
+  <section class="section">
+    <div class="container pillars">
+      <article class="pillar" data-reveal>
+        <p class="eyebrow">Vision</p>
+        <p class="pillar__text">{vision.vision}</p>
+      </article>
+      <article class="pillar" data-reveal>
+        <p class="eyebrow">Mission</p>
+        <p class="pillar__text">{vision.mission}</p>
+      </article>
+      <article class="pillar pillar--ink" data-reveal>
+        <p class="eyebrow">Philosophy</p>
+        <p class="pillar__text pillar__text--lg">&ldquo;{quotes.philosophy}&rdquo;</p>
+      </article>
+    </div>
+  </section>
+
+  <QuoteBand quote={quotes.service} />
+
+  <section class="section section--ivory">
+    <div class="container">
+      <SectionHead eyebrow="In practice" title="How the philosophy shows up" center />
+      <div class="cards cards--3">
+        {values.map((v, i) => (
+          <article class="card" data-reveal>
+            <span class="card__num">0{i + 1}</span>
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* TODO(client): "The next ten years" and a 150-word Message from the Chairman, written from an interview and approved by him (plan §5.7). */}
+
+  <CtaBand />
+</Base>

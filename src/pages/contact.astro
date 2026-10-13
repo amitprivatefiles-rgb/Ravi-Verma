@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import PartnerForm from "../components/PartnerForm.astro";
+import { contact, profiles } from "../data/site";
+const q = encodeURIComponent(contact.mapQuery);
+---
+
+<Base title="Contact" description="Contact the office of R. P. Verma, NRS Group head office, Salt Lake Sector V, Kolkata.">
+  <PageHero eyebrow="Contact" title="Contact Mr. Verma's office" intro="For partnerships, investments, media and events." image="/images/banner-staircase.jpg" />
+
+  <section class="section">
+    <div class="container contact">
+      <div class="contact__info" data-reveal>
+        <div class="contact__block">
+          <p class="eyebrow">Office</p>
+          <address>{contact.addressLines.map((l) => (<>{l}<br /></>))}</address>
+          <a href={`https://maps.google.com/?q=${q}`} target="_blank" rel="noopener" class="text-link">Open in Google Maps ↗</a>
+        </div>
+        <div class="contact__block">
+          <p class="eyebrow">Call or write</p>
+          <p class="contact__big"><a href={contact.phoneHref}>{contact.phone}</a></p>
+          <p class="contact__big"><a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+          <p><a href={contact.whatsappHref} target="_blank" rel="noopener" class="text-link">Message on WhatsApp ↗</a></p>
+        </div>
+        <div class="contact__block">
+          <p class="eyebrow">Follow</p>
+          <ul class="plain">
+            {profiles.map((p) => <li><a href={p.href} target="_blank" rel="noopener">{p.label}</a></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="form-card" data-reveal>
+        <h2 class="h3">Send a message</h2>
+        <PartnerForm preset="Other" />
+      </div>
+    </div>
+  </section>
+
+  <section class="map">
+    <iframe title="Map of the NRS Group head office, Kolkata" src={`https://www.google.com/maps?q=${q}&output=embed`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
+</Base>

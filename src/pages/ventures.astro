@@ -1,0 +1,62 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { nrsGroupUrl, ventureSectors } from "../data/site";
+---
+
+<Base
+  title="Ventures"
+  description="Every company and brand founded by R. P. Verma: NRS Royal Palace, Bistro Y, HakkaLand, Realtiven Construction, Shaila Realty, Eco Amusement Dam Park and more."
+>
+  <PageHero
+    eyebrow="Ventures"
+    title="The companies and brands he has built"
+    intro="Hospitality, food & dining, real estate and construction, leisure and business services, grouped by sector."
+    image="/images/banner-terrace.jpg"
+  />
+
+  {
+    ventureSectors.map((s, i) => (
+      <section class:list={["section", { "section--ivory": i % 2 === 1 }]}>
+        <div class="container">
+          <SectionHead eyebrow={s.title} title={s.intro} />
+          <div class="ventures">
+            {s.ventures.map((v) => (
+              <article class="venture" data-reveal>
+                <div class="venture__logo">
+                  {v.logo ? <img src={v.logo} alt={`${v.name} logo`} loading="lazy" /> : <span>{v.name.replace(/Pvt\. Ltd\.|&/g, "").split(" ").filter(Boolean).map((w) => w[0]).join("").slice(0, 3)}</span>}
+                </div>
+                <div class="venture__body">
+                  <h3>{v.name}</h3>
+                  <p class="venture__meta">
+                    {[v.city, v.year && `Since ${v.year}`].filter(Boolean).join(" · ")}
+                  </p>
+                  <p>{v.body}</p>
+                  {v.url && (
+                    <a href={v.url} class="text-link" target="_blank" rel="noopener">
+                      Visit website <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  {
+    nrsGroupUrl && (
+      <section class="section section--tight">
+        <div class="container center">
+          <a href={nrsGroupUrl} class="btn btn--ink" target="_blank" rel="noopener">Visit NRS Group</a>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand />
+</Base>

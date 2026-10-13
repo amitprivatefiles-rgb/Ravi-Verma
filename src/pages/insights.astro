@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { insightTopics } from "../data/site";
+---
+
+<Base title="Insights" description="Articles by R. P. Verma on hospitality, investment and building businesses in eastern India.">
+  <PageHero
+    eyebrow="Insights"
+    title="Notes on hospitality and building businesses"
+    intro="Articles in Mr. Verma's words on hotels, food, investment and tourism in Bengal and Odisha."
+    image="/images/banner-staircase.jpg"
+  />
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="Coming soon" title="Articles in preparation" intro="New articles are published twice a month. Here is what is coming first." />
+      {/* Articles are drafted from his inputs and published only after he approves them. */}
+      <ol class="topics">
+        {insightTopics.map((t, i) => (
+          <li data-reveal>
+            <span class="topics__num">{String(i + 1).padStart(2, "0")}</span>
+            <span class="topics__title">{t}</span>
+            <span class="badge badge--inline badge--muted">In preparation</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand title="Want to interview Mr. Verma?" body="Journalists and event organisers can request an interview or a speaking slot." />
+</Base>

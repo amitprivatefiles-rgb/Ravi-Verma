@@ -1,0 +1,23 @@
+---
+interface Props {
+  title?: string;
+  body?: string;
+}
+const {
+  title = "Have a project, land or idea? Let's build it together.",
+  body = "Mr. Verma and the NRS Group team welcome investors, landowners, partners and media.",
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="container cta-band__inner" data-reveal>
+    <div>
+      <h2>{title}</h2>
+      <p>{body}</p>
+    </div>
+    <div class="btn-row">
+      <a href="/partner/" class="btn btn--ink">Partner with NRS</a>
+      <a href="/contact/" class="btn btn--outline-ink">Contact the office</a>
+    </div>
+  </div>
+</section>

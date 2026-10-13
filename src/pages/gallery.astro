@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { gallery, person } from "../data/site";
+---
+
+<Base title="Gallery" description="Photographs of R. P. Verma and the NRS Group properties and teams he has built.">
+  <PageHero eyebrow="Gallery" title="People and places" intro="Mr. Verma, the properties he has built, and the teams who run them." image="/images/banner-terrace.jpg" />
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow={person.brandName} title="Portraits" />
+      <div class="gallery gallery--portraits">
+        {gallery.him.map((g) => (
+          <figure data-reveal>
+            <img src={g.src} alt={g.alt} loading="lazy" width={g.w} height={g.h} />
+            <figcaption>{g.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+      {/* TODO(client): professional photoshoot (office, site visit at Tarapith, at a property). */}
+    </div>
+  </section>
+
+  <section class="section section--ivory">
+    <div class="container">
+      <SectionHead eyebrow="The properties" title="What he has built" />
+      <div class="gallery">
+        {gallery.places.map((g) => (
+          <figure data-reveal>
+            <img src={g.src} alt={g.alt} loading="lazy" />
+            <figcaption>{g.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="The teams" title="Quality services demand quality people" />
+      <div class="gallery gallery--3">
+        {gallery.teams.map((g) => (
+          <figure data-reveal>
+            <img src={g.src} alt={g.alt} loading="lazy" />
+            <figcaption>{g.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

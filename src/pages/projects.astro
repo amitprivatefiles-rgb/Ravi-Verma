@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { currentProjects } from "../data/site";
+---
+
+<Base
+  title="Current projects"
+  description="Operating properties and outlets founded by R. P. Verma: NRS Royal Palace in Puri, Bistro Y in Salt Lake and HakkaLand in Madhyamgram."
+>
+  <PageHero
+    eyebrow="Current projects"
+    title="Places guests come back to"
+    intro="The hotels and restaurants operating today under NRS Group."
+    image="/images/banner-terrace.jpg"
+  />
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="Operating today" title="Hotels and restaurants" />
+      <div class="showcases">
+        {
+          currentProjects.map((p, i) => (
+            <article class:list={["showcase", { "showcase--flip": i % 2 === 1 }]} data-reveal>
+              <figure class="showcase__media">
+                <img src={p.image} alt={p.imageAlt} loading="lazy" />
+                {p.caption && <figcaption>{p.caption}</figcaption>}
+              </figure>
+              <div class="showcase__body">
+                <p class="eyebrow">{p.place}</p>
+                <h2>{p.name}</h2>
+                <ul class="ticks">
+                  {p.facts.map((f) => (
+                    <li>{f}</li>
+                  ))}
+                </ul>
+                <a href={p.url} class="btn btn--ink" target="_blank" rel="noopener">
+                  Visit website ↗
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

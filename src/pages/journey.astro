@@ -1,0 +1,48 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Monogram from "../components/Monogram.astro";
+import PageHero from "../components/PageHero.astro";
+import { timeline } from "../data/site";
+---
+
+<Base
+  title="Journey"
+  description="R. P. Verma's journey from 2012 to today: Shaila Realty, Bistro-Y Foods, NRS Business Centre, Realtiven Construction, NRS Royal Palace and the Tarapith tower hotel."
+>
+  <PageHero
+    eyebrow="Journey"
+    title="A decade of disciplined expansion"
+    intro="From a first step into real estate in 2012 to a tower hotel rising at Tarapith: the milestones that built NRS Group."
+    image="/images/banner-palace-night.jpg"
+  />
+
+  <section class="section section--ivory">
+    <div class="container">
+      <ol class="timeline" data-timeline>
+        {
+          timeline.map((m, i) => (
+            <li class:list={["timeline__item", { "timeline__item--right": i % 2 === 1, "timeline__item--future": m.status }]} data-reveal>
+              <span class="timeline__dot" aria-hidden="true" />
+              <div class="timeline__card">
+                <span class="timeline__year">{m.year}</span>
+                <h2 class="timeline__title">{m.title}</h2>
+                <p>{m.body}</p>
+                {m.image ? (
+                  <img src={m.image} alt={m.imageAlt} loading="lazy" class="timeline__img" />
+                ) : null}
+                {m.status && <span class="badge badge--inline">{m.status === "now" ? "Under construction" : "In planning"}</span>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="timeline__end" data-reveal>
+        <Monogram size={48} />
+        <p>The journey continues.</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Be part of the next chapter" body="Invest in an upcoming project, propose land or a partnership, or bring an idea." />
+</Base>

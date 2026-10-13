@@ -1,0 +1,77 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { contact, person } from "../data/site";
+
+// Only real, verifiable items. New press, awards and interviews are added as they happen.
+const recognition = [
+  { label: "Bistro Y", value: "4.6★", note: "Guest rating from 2,751+ reviews" },
+  { label: "HakkaLand", value: "4.2★", note: "Rating on District" },
+];
+const pressKitMail = `mailto:${contact.email}?subject=${encodeURIComponent("Press kit request: R. P. Verma")}`;
+---
+
+<Base title="Media & recognition" description="Media resources, press kit and recognition for R. P. Verma, founder of NRS Group.">
+  <PageHero
+    eyebrow="Media & recognition"
+    title="For journalists and organisers"
+    intro="Interview requests, speaking invitations and press resources for Mr. R. P. Verma."
+    image="/images/banner-palace-night.jpg"
+  >
+    <div class="btn-row">
+      <a href="/partner/?type=Media%20%2F%20interview" class="btn btn--gold">Request an interview</a>
+      <a href={pressKitMail} class="btn btn--outline-light">Request the press kit</a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="Recognition" title="What guests say" intro="Ratings for NRS restaurants from public review platforms." />
+      <div class="cards cards--3">
+        {recognition.map((r) => (
+          <article class="card card--stat" data-reveal>
+            <span class="card__big">{r.value}</span>
+            <h3>{r.label}</h3>
+            <p>{r.note}</p>
+          </article>
+        ))}
+        <a class="card card--link" href="https://www.youtube.com/@nrsgroup2024" target="_blank" rel="noopener" data-reveal>
+          <span class="card__big">▶</span>
+          <h3>NRS Group on YouTube</h3>
+          <p>Videos from NRS properties and events.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ivory">
+    <div class="container split">
+      <div data-reveal>
+        <p class="eyebrow">Press kit</p>
+        <h2>Everything you need for a story</h2>
+        <p class="lead">Short and long biographies, approved photographs, logos and a fact sheet on NRS Group.</p>
+        <a href={pressKitMail} class="btn btn--ink">Request the press kit</a>
+      </div>
+      <div class="kit" data-reveal>
+        <h3>Quick facts</h3>
+        <dl>
+          <div><dt>Name</dt><dd>{person.fullName} (R. P. Verma)</dd></div>
+          <div><dt>Role</dt><dd>{person.title}, NRS Group</dd></div>
+          <div><dt>Based in</dt><dd>Kolkata, West Bengal</dd></div>
+          <div><dt>First venture</dt><dd>Bistro-Y Foods (2013)</dd></div>
+          <div><dt>Flagship</dt><dd>NRS Royal Palace, Puri (2020)</dd></div>
+          <div><dt>Now building</dt><dd>Tower hotel on 20 bighas, Tarapith</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="In the news" title="Press coverage" intro="Articles, interviews and awards will be listed here as they are published." />
+      {/* TODO: add each genuine article, award, panel or interview. Never add placeholder logos. */}
+      <div class="placeholder" data-reveal>Coverage will appear here</div>
+    </div>
+  </section>
+</Base>

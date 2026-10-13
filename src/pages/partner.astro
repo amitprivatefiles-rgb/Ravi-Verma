@@ -1,0 +1,79 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import PartnerForm from "../components/PartnerForm.astro";
+import SectionHead from "../components/SectionHead.astro";
+import { contact } from "../data/site";
+
+const reasons = [
+  { title: "A track record since 2012", body: "A decade of building and running companies across hospitality, food, construction and real estate." },
+  { title: "Land in hand", body: "The Tarapith hotel stands on 20 bighas the family has held for about ten years." },
+  { title: "Built and run in-house", body: "Realtiven Construction builds, and the NRS hospitality team runs what it builds." },
+];
+const ways = [
+  { title: "Invest in a project", body: "Tarapith, the Sundarban and upcoming NRS destinations." },
+  { title: "Land / JV partnership", body: "Land in a tourist or pilgrimage destination? Explore a joint venture." },
+  { title: "Business idea", body: "Pitch a venture in hospitality, food, real estate or leisure." },
+  { title: "Media & speaking", body: "Interviews, panels and event invitations." },
+];
+---
+
+<Base
+  title="Partner & invest"
+  description="Invest with NRS Group, propose land or a joint venture, pitch a business idea, or invite R. P. Verma for an interview or event."
+>
+  <PageHero
+    eyebrow="Partner & invest"
+    title="Let's build it together"
+    intro="Investors, landowners, founders, journalists and organisers: every enquiry reaches Mr. Verma's office."
+    image="/images/banner-terrace.jpg"
+  />
+
+  <section class="section">
+    <div class="container partner">
+      <div>
+        <SectionHead eyebrow="Ways to work together" title="How you can partner with NRS" />
+        <div class="ways">
+          {ways.map((w) => (
+            <article class="way" data-reveal>
+              <h3>{w.title}</h3>
+              <p>{w.body}</p>
+            </article>
+          ))}
+        </div>
+        <h2 class="h3 partner__sub">Why partner with Mr. Verma</h2>
+        <ul class="reasons">
+          {reasons.map((r, i) => (
+            <li data-reveal>
+              <span class="reasons__num">0{i + 1}</span>
+              <div>
+                <h3>{r.title}</h3>
+                <p>{r.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="partner__direct">
+          Prefer to talk? <a href={contact.phoneHref}>{contact.phone}</a> · <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        </p>
+      </div>
+      <div class="partner__form" id="enquire">
+        <div class="form-card">
+          <h2 class="h3">Send an enquiry</h2>
+          <PartnerForm />
+        </div>
+        <p class="disclaimer">
+          This page invites expressions of interest only and is not an offer or solicitation to buy securities. Every
+          investment is subject to due diligence, a formal written agreement and applicable law.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Preselect the enquiry type from ?type=… (used by links across the site).
+    const t = new URLSearchParams(location.search).get("type");
+    const sel = document.querySelector<HTMLSelectElement>("#f-enquiryType");
+    if (t && sel && [...sel.options].some((o) => o.value === t)) sel.value = t;
+  </script>
+</Base>

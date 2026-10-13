@@ -1,0 +1,17 @@
+---
+import Monogram from "./Monogram.astro";
+interface Props {
+  quote: string;
+  by?: string;
+}
+const { quote, by = "R. P. Verma" } = Astro.props;
+---
+
+<section class="quote-band">
+  <div class="jali-overlay" aria-hidden="true"></div>
+  <figure class="container narrow quote-band__inner" data-reveal>
+    <Monogram size={56} />
+    <blockquote>&ldquo;{quote}&rdquo;</blockquote>
+    <figcaption>{by}</figcaption>
+  </figure>
+</section>
