@@ -100,13 +100,16 @@ export const quotes = {
   service:
     "The target is always to provide state-of-the-art services to the clients where quality is the first priority.",
   puri: "A hotel there needed to belong to the place, not impose on it.",
+  // Brochure, "Meet the Founder": his life mantra.
+  mantra: "Zindagi mein khush raho",
 };
 
 export const bio = [
-  "The son of a family rooted in the values of hard work and service, Mr. Verma did not inherit an empire. He began as an ordinary employee at a small organisation, then moved into small business ventures of his own.",
+  "The son of a family rooted in the values of hard work and service, Mr. Verma did not inherit an empire. After completing his education in Ranchi, Jharkhand, he moved to Kolkata and started as an employee in a boutique organisation. His mission was always to go one step further.",
   "He started Bistro-Y Foods in 2013: a modest beginning in the food business that taught him the fundamentals. A guest remembers how they were treated long after they forget what they paid, and quality is not a department but a habit.",
   "By 2014 he had established NRS Business Centre Pvt. Ltd. in Salt Lake, Kolkata, the nerve centre from which a growing constellation of companies would be coordinated. What followed was a decade of disciplined expansion: construction, food, real estate, leisure and, always at the centre of it all, hospitality.",
   "When he chose Puri for his flagship hotel, it was not an accident. Puri is a city of temples, of pilgrimage, of the sea. A hotel there needed to belong to the place, not impose on it. So he built NRS Royal Palace with hand-carved arches, white jali screens, gilded domes, marble floors and teak thresholds. Ornate on purpose; every detail an act of respect for the city and the guests who come to it.",
+  "One of the youngest and most energetic entrepreneurs in the region, he believes in sharing smiles. His life mantra: \"Zindagi mein khush raho\" (be happy in life).",
   "Today, from the group's head office in Kolkata, Mr. Verma oversees a group of companies united by a single belief: that excellence is not a milestone but a daily practice. NRS Royal Palace remains the flagship, and the group's largest project yet, a tower hotel at Tarapith, is now rising.",
 ];
 
@@ -138,8 +141,8 @@ export type Milestone = {
 export const timeline: Milestone[] = [
   {
     year: "Early years",
-    title: "An ordinary beginning",
-    body: "Starts as an employee at a small organisation, then moves into small business ventures of his own.",
+    title: "From Ranchi to Kolkata",
+    body: "Completes his education in Ranchi, Jharkhand, moves to Kolkata and starts as an employee in a boutique organisation, then ventures into business of his own.",
   },
   {
     year: "2012",
